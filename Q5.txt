@@ -1,0 +1,99 @@
+
+class Vehicle:
+    def __init__(self, year, mileage, dealer_cost, sales_price):
+        self.year = year
+        self.mileage = mileage
+        self.dealer_cost = dealer_cost
+        self.sales_price = sales_price
+
+    def get_year(self):
+        return self.year
+
+    def get_mileage(self):
+        return self.mileage
+
+    def get_dealer_cost(self):
+        return self.dealer_cost
+
+    def get_sales_price(self):
+        return self.sales_price
+
+    def set_year(self, year):
+        self.year = year
+
+    def set_mileage(self, mileage):
+        self.mileage = mileage
+
+    def set_dealer_cost(self, dealer_cost):
+        self.dealer_cost = dealer_cost
+
+    def set_sales_price(self, sales_price):
+        self.sales_price = sales_price
+
+    def __str__(self):
+        return "Year: " + str(self.year) + ", Mileage: " + str(self.mileage) + ", CarCondition: Used, DealerCost: " + str(
+            self.dealer_cost) + ", SalesPrice: " + str(self.sales_price)
+        
+class StackTest:
+    def __init__(self, stack):
+        self.stack = stack
+
+    def compute_net_profit(self, year):
+        profit = 0
+        while self.stack.stack_size() > 0:
+            vehicle = self.stack.pop_element()
+            if vehicle.get_year() > year:
+                profit += vehicle.get_sales_price() - vehicle.get_dealer_cost()
+        return profit
+    
+    # get_stack(): This method will return the stack of Vehicle objects.
+    def get_stack(self):
+        return self.stack
+    
+class Stack:
+    def __init__(self):
+        self.stack = []
+
+    def push_element(self, element):
+        self.stack.append(element)
+
+    def pop_element(self):
+        return self.stack.pop()
+
+    def stack_size(self):
+        return len(self.stack)
+
+    def print_stack(self, order):
+        if order == 0:
+            for i in range(len(self.stack)):
+                print(self.stack[i])
+        else:
+            for i in range(len(self.stack) - 1, -1, -1):
+                print(self.stack[i])
+                
+                
+def CreateStack(file_name):
+    stack = Stack()
+    with open(file_name, 'r') as f:
+        for line in f:
+            line = line.strip()
+            line = line.split(',')
+            vehicle = Vehicle(int(line[0]), int(line[1]), float(line[2]), float(line[3]))
+            stack.push_element(vehicle)
+    return stack
+
+
+def main():
+    sk = CreateStack("vehicles.csv")
+    sobj = StackTest(sk)
+    print(round(sobj.compute_net_profit(2015), 2))
+    sk = CreateStack("vehicles.csv")
+    sobj = StackTest(sk)
+    sobj.get_stack().print_stack(0)
+    sk = CreateStack("vehicles.csv")
+    sobj = StackTest(sk)
+    sobj.get_stack().print_stack(1)
+    
+if __name__ == "__main__":
+    main()
+   

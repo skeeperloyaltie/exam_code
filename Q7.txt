@@ -1,0 +1,18 @@
+
+
+def F(n):
+    
+    n = "".join(sorted(n))
+    if len(n) == 1:
+        return n
+    else:
+        if n[0] == n[1]:
+            return F(n[1:])
+        else:
+            return n[0] + F(n[1:])
+        
+def main():
+    print(F("afbcxa"))
+    
+if __name__ == "__main__":
+    main()
